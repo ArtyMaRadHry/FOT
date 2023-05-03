@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 var speed = 250
 var direction = Vector2.UP
+var hp = 1.0
 
 var reloading = 0.0
 
@@ -22,6 +23,7 @@ func _physics_process(delta):
 	
 	var heading_to = global_position + input
 	look_at(heading_to)
+	$UI.rotation_degrees = -rotation_degrees
 	
 	if reloading:
 		reloading -= delta
@@ -46,5 +48,15 @@ func _physics_process(delta):
 			grenade.global_position = $Gun.global_position
 			grenade.rotation = rotation
 
+func _process(delta):
+	$UI/HP.scale.x = clamp(hp, 0.0, 1.0)
+
 func hit_by_grenade(grenade, collision):
-	pass
+	hp = hp - 0.501
+	if hp <= 0.0:
+		get_tree().reload_current_scene()
+		
+		if player_id == 0:
+			Game.p2_score += 1
+		elif player_id == 1:
+			Game.p1_score += 1

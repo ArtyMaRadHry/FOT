@@ -14,3 +14,10 @@ shape = SubResource( 8 )
 
 [node name="Gun" type="Position2D" parent="."]
 position = Vector2( 50, 0 )
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="HP" type="Line2D" parent="UI"]
+points = PoolVector2Array( -32, -38, 32, -38 )
+width = 8.0
+default_color = Color( 0.317647, 1, 0.176471, 0.717647 )
